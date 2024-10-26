@@ -23,8 +23,8 @@ const container = (delay) => ({
 const Hero = ({theme}) => {
   return (
     <div className='bg-white dark:bg-black dark:text-white border-b border-neutral-900 pb-24 pt-14
-     w-full' id='home'>
-        <div className='flex flex-wrap'>
+     max-w-screen-2xl container' id='home'>
+        <div className='flex flex-wrap tracking-wide my-10'>
 
           <motion.div 
            whileInView={{opacity: 1, x: 0}}
@@ -32,8 +32,8 @@ const Hero = ({theme}) => {
            transition={{duration: 0.5}}
 
           className='w-full lg:w-1/2 lg:p-8'>
-            <div className='flex justify-center'>
-                <img className='h-60 w-48 sm:h-96 sm:w-auto mt-2 mr-7 rounded-[100px]' 
+            <div className='flex justify-center mx-2 my-4'>
+                <img className='h-60 w-48 lg:h-96 lg:w-auto mt-2 mr-7 rounded-[100px]' 
                 src={theme === "dark" ? Pro2 : Pro1} alt="profile" />
             </div>
 

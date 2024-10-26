@@ -5,7 +5,8 @@ import {motion} from "framer-motion"
 
 const About = () => {
   return (
-    <div className='bg-slate-50 dark:bg-neutral-950 dark:text-white border-b border-neutral-900 pb-10' id='about'>
+    <div className='bg-slate-50 dark:bg-neutral-950 dark:text-white border-b border-neutral-900 pb-10
+    max-w-screen-2xl' id='about'>
         <h1 className='pt-20 text-center text-4xl'>About 
             <span className='text-cyan-600'>{} ME</span></h1>
             <div className='flex flex-wrap'>

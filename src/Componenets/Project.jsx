@@ -1,7 +1,6 @@
 import React from 'react'
 import {motion} from "framer-motion"
 import { BsGithub } from 'react-icons/bs'
-import {Link} from "react-scroll"
 import project1 from '../assets/pr-1.jpg'
 import project2 from '../assets/pr-2.jpg'
 import project3 from '../assets/pr-3.jpg'
@@ -11,7 +10,7 @@ import project4 from '../assets/pr-4.jpg'
 
 const Projects = ({type, title, summary, img, link, gitHub}) => {
     return(
-        <div className='w-[50%] flex flex-col items-center justify-between rounded-3xl border border-solid
+        <div className='w-1/2 flex flex-col items-center justify-between rounded-3xl border border-solid
         border-dark text-black bg-gradient-to-b from-zinc-200 via-neutral-300 to-gray-600 shadow-2xl p-2
         hover:scale-110'>
 
@@ -27,15 +26,15 @@ const Projects = ({type, title, summary, img, link, gitHub}) => {
          <p className='font-medium'>{summary}</p>
 
          <div className='flex gap-7 items-center mt-2 justify-between'>
-         <Link href={gitHub} className='w-[150px] sm:w-[180px]'> 
+         <a href={gitHub} className='w-[150px] sm:w-[180px]'> 
          <BsGithub size={22}/>
-         </Link>
+         </a>
 
-         <Link href={link} className='ml-4 rounded-xl bg-black text-white p-1 px-1 py-1 text-xs font-semibold 
+         <a href={link} className='ml-4 rounded-xl bg-black text-white p-1 px-1 py-1 text-xs font-semibold 
         mb-1 hover:bg-gradient-to-r from-orange-600
          via-white to-green-600 hover:text-black'> 
          Visit Project
-         </Link>
+         </a>
          </div>
 
          </div>

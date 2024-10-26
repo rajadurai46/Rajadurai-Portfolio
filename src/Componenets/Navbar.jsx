@@ -15,7 +15,7 @@ const Navbar = ({theme, settheme}) => {
 
   return (
     <nav className='bg-white dark:bg-black dark:text-white flex items-center 
-    justify-between py-4 border-b border-neutral-900'>
+    justify-between py-4 border-b border-neutral-900 mx-auto'>
 
 <div className="flex justify-center items-center">
           <img src={theme === "dark" ? logo2 : logo1} width={65} height={65} className='lg:w-[75px] lg:h-[75px]' />
@@ -24,17 +24,17 @@ const Navbar = ({theme, settheme}) => {
 <h1 className='text-xl lg:text-4xl font-bold'>Time to Program</h1>
 </div>
         
-        <div className='mb-10 mr-2 sm:mr-7'>
+        <div className='mb-10 mr-2 lg:mr-7'>
           <label className='font-semibold text-md lg:text-xl transition-colors'>
            {theme === "light" ? "Light Mode" : "Dark Mode"}
           </label>
           
         </div>
 
-        <div className='fixed bottom-1 lg:bottom-1 w-full overflow-hidden z-50'>
+        <div className='fixed bottom-0 lg:bottom-0 lg:ml-96 ml-14 items-center overflow-hidden z-50'>
           <div className='container mx-auto'>
-            <div className='w-full bg-black dark:bg-white h-[60px] backdrop-blur-2xl rounded-full items-center
-            max-w-[450px] max-h-[32px] mx-auto px-2 flex justify-between text-2xl text-white dark:text-black
+            <div className='bg-black dark:bg-white h-[60px] backdrop-blur-2xl rounded-full items-center
+            max-w-[350px] max-h-[32px] mx-auto px-2 flex justify-between text-2xl text-white dark:text-black
             lg:max-w-[500px] lg:max-h-[40px] lg:gap-5 gap-3' >
 
         <Link to='home'
@@ -75,8 +75,8 @@ const Navbar = ({theme, settheme}) => {
 
 
         {theme === "dark" ? (<MdSunny  onClick={() => settheme("light")} className='
-          text-3xl lg:text-3xl ml-0 lg:ml-1 cursor-pointer' />): (<FaMoon onClick={() => settheme("dark")}
-          className='text-2xl sm:text-2xl ml-0 sm:ml-1 cursor-pointer'/>)}
+          text-4xl lg:text-3xl ml-0 lg:ml-1 cursor-pointer' />): (<FaMoon onClick={() => settheme("dark")}
+          className='text-3xl lg:text-2xl ml-0 lg:ml-1 cursor-pointer'/>)}
 
         
 
