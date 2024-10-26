@@ -41,11 +41,11 @@ useEffect(() => {
 
 
 
-
+ 
 
 
   return (
-    <div className='m'>
+    <div>
       <Navbar theme={theme} settheme={settheme} />
       <Hero theme={theme}/>
       <About/>

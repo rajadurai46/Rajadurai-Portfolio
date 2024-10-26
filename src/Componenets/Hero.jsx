@@ -22,7 +22,8 @@ const container = (delay) => ({
 
 const Hero = ({theme}) => {
   return (
-    <div className='bg-white dark:bg-black dark:text-white border-b border-neutral-900 pb-24 pt-14' id='home'>
+    <div className='bg-white dark:bg-black dark:text-white border-b border-neutral-900 pb-24 pt-14
+     w-full' id='home'>
         <div className='flex flex-wrap'>
 
           <motion.div 
@@ -93,7 +94,7 @@ const Hero = ({theme}) => {
                 animate="visible"
                 
                 
-                className='my-2 max-w-xl py-4'>{HERO_CONTENT}</motion.p>
+                className='my-2  py-4'>{HERO_CONTENT}</motion.p>
 
                 <div>
                   

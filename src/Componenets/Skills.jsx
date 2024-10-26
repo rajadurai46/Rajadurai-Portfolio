@@ -32,7 +32,7 @@ const Skills = ({theme}) => {
         
         className='pt-20 mb-12 text-center text-4xl'>Skills</motion.h1>
 
-        <div className='w-full h-screen relative flex items-center justify-center rounded-full bg-circular'>
+        <div className=' h-screen relative flex items-center justify-center rounded-full bg-circular'>
           
 
             <motion.div className='flex items-center justify-center rounded-full font-semibold bg-dark text-white
