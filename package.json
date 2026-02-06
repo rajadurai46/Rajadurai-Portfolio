@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 
 =======
+=======
+{
+<<<<<<< HEAD
+>>>>>>> e9fc71a (first)
   "name": "port-folio",
   "private": true,
   "scripts": {
@@ -38,6 +43,20 @@
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14",
     "vite": "^5.4.9"
+<<<<<<< HEAD
 >>>>>>> bf43a19 (first)
+=======
+=======
+  "name": "mern-e-commerce",
+  "private": true,
+  "scripts": {
+    "client": "cd port-folio && npm run dev",
+    "server": "cd backend && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "dependencies": {
+    "concurrently": "^9.2.1"
+>>>>>>> 5800abb (first)
+>>>>>>> e9fc71a (first)
   }
 }
