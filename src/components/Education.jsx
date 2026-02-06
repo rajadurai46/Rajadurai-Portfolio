@@ -1,107 +1,176 @@
-import React, { useRef } from 'react'
-import LiIcon from './LiIcon'
-import {motion, useScroll} from 'framer-motion'
+import { useRef } from "react";
+import { motion } from "framer-motion";
+import { FaSchool, FaUniversity, FaGraduationCap } from "react-icons/fa";
 
+/* Degree Icon */
+const getIcon = (degree) => {
+  if (degree.includes("B.E")) return <FaGraduationCap />;
+  if (degree.includes("Diploma")) return <FaUniversity />;
+  return <FaSchool />;
+};
 
+/* Education Card */
+const Details = ({
+  from,
+  college,
+  degree,
+  marks,
+  place,
+  collegelink,
+  index,
+}) => {
+  return (
+    <li className="relative mb-16 w-full flex justify-center">
+      {/* Timeline Dot */}
+      <span
+        className="
+        absolute left-1/2 -translate-x-1/2 top-6 
+        w-3 h-3 rounded-full bg-cyan-500 
+        shadow-[0_0_10px_rgba(6,182,212,0.8)]
+        "
+      />
 
+      {/* Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}   // ✅ animate once
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className={`
+        w-full sm:w-[90%] lg:w-[44%]
+        rounded-2xl border border-neutral-700
+        bg-white/80 dark:bg-black/40
+        backdrop-blur-xl p-5 sm:p-6
+        shadow-md hover:shadow-cyan-500/20
+        transition-all
+        ${
+          index % 2 === 0
+            ? "lg:mr-auto lg:pr-12"
+            : "lg:ml-auto lg:pl-12"
+        }
+        `}
+      >
+        {/* Header */}
+        <div className="flex items-center gap-3 mb-1 text-cyan-600 text-lg sm:text-xl">
+          {getIcon(degree)}
+          <h3 className="font-semibold text-black dark:text-white">
+            {degree}
+          </h3>
+        </div>
 
-const Details = ({from, college, degree, marks, place, collegelink}) => { 
+        {/* College */}
+        <a
+          href={collegelink}
+          target="_blank"
+          rel="noreferrer"
+          className="
+          block text-sm sm:text-base font-medium
+          text-cyan-600 hover:underline
+          "
+        >
+          {college}
+        </a>
 
-    const ref = useRef(null)
-    return(
-        <li ref={ref} className='my-8 first:mt-0 last:mb-0 w-[60%] mx-auto flex flex-col 
-         justify-between'>
-            <LiIcon reference={ref}/>
-            <motion.div
-            initial={{y:50}}
-            whileInView={{y:0}}
-            transition={{duration:0.5, type:"spring"}}
-            >
-            <h3 className='capitalize font-bold text-xl'>{degree}&nbsp; 
-            <a href={collegelink} target='_blank' className='text-red-600 capitalize'>{college}</a>
-                </h3>
-            <span className='capitalize font-medium text-slate-600'>
-              {from}  @{place}
-            </span>
-            <p className='font-medium w-full'>
-                {marks}
-            </p>
-            </motion.div>
-        </li>
-    )
-}
+        {/* Meta */}
+        <span
+          className="
+          block mt-1 text-xs sm:text-sm
+          text-neutral-600 dark:text-neutral-400
+          "
+        >
+          {from} • {place}
+        </span>
 
-
+        {/* Marks */}
+        <p className="mt-3 text-sm sm:text-base font-medium">
+          Score:{" "}
+          <span className="text-cyan-600 font-semibold">
+            {marks}
+          </span>
+        </p>
+      </motion.div>
+    </li>
+  );
+};
 
 const Education = () => {
+  const educationData = [
+    {
+      from: "2017 – 2020",
+      college: "Mahendra Institute of Technology",
+      degree: "B.E – Automobile Engineering",
+      marks: "67%",
+      place: "Namakkal, Tamil Nadu",
+      collegelink: "https://mahendratech.org/",
+    },
+    {
+      from: "2015 – 2017",
+      college: "M.I.E.T Polytechnic College",
+      degree: "Diploma – Automobile Engineering",
+      marks: "73%",
+      place: "Tiruchirappalli, Tamil Nadu",
+      collegelink: "https://www.mietpoly.org/",
+    },
+    {
+      from: "2014 – 2015",
+      college: "Tagore Vidyalayam Mat Hr Sec School",
+      degree: "HSC",
+      marks: "51%",
+      place: "Madurai, Tamil Nadu",
+      collegelink: "https://in.worldorgs.com/catalog/madurai/elementary-school/tagore-vidyalayam-matric-hrsec-school",
+    },
+    {
+      from: "2012 – 2013",
+      college: "Tagore Vidyalayam Mat Hr Sec School",
+      degree: "SSLC",
+      marks: "79%",
+      place: "Madurai, Tamil Nadu",
+      collegelink: "https://in.worldorgs.com/catalog/madurai/elementary-school/tagore-vidyalayam-matric-hrsec-school",
+    },
+  ];
 
-    const ref = useRef(null)
-    const {scrollYProgress} = useScroll(
-        {
-            target: ref,
-            offset: ["start end", "center start"]
-        }
-    )
   return (
-           <div className='bg-slate-50 dark:bg-neutral-950 dark:text-white border-b border-neutral-900 
-           pb-24' id='education'>
-            <h2 className='font-semibold text-4xl mb-32 text-center pt-14'>
-                Education
-            </h2>
+    <section
+      id="education"
+      className="
+      bg-slate-50 dark:bg-neutral-950
+      dark:text-white border-b border-neutral-900
+      py-20
+      "
+    >
+      <h2
+        className="
+        text-center text-3xl sm:text-4xl
+        font-semibold mb-20
+        "
+      >
+        Education
+      </h2>
 
-            <div ref={ref} className='w-[75%] mx-auto relative'>
-                <motion.div
-                style={{scaleY: scrollYProgress}} 
-                
-                className='absolute left-[54px] top-0 w-[4px] h-full bg-dark dark:bg-white origin-top'/>
+      <div className="relative max-w-6xl mx-auto px-4">
+        {/* STATIC CENTER TIMELINE */}
+        <div
+          className="
+          absolute left-1/2 -translate-x-1/2 top-0
+          w-[3px] h-full rounded-full
+          bg-gradient-to-b
+          from-cyan-500 via-blue-500 to-purple-600
+          "
+        />
 
-                <ul className='w-full flex flex-col items-center justify-between pl-8'>
+        <ul className="relative flex flex-col">
+          {educationData.map((item, index) => (
+            <Details key={index} {...item} index={index} />
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+};
 
-                <Details
-                from= "2017-2020"
-                college= "Mahendra Institute of Technology"
-                collegelink= "/"
-                degree= "B.E(Automobile Engineering)"
-                marks= "67%"
-                place= "Namakkal|Tamilnadu"
-                />
-                
-                
-                <Details
-                from= "2015-2017"
-                college= "M.I.E.T Polytechnic College"
-                collegelink= "/"
-                degree= "Diploma(Automobile Engineering)"
-                marks= "73%"
-                place= "Tiruchirappalli|Tamilnadu"
-                />
-                
-                
-               
-                <Details
-                from= "2014-2015"
-                college= "Tagore Vidyalayam Mat Hr Sec School"
-                collegelink= "/"
-                degree= "HSC"
-                marks= "51%"
-                place= "Madurai|Tamilnadu"
-                />
+export default Education;
 
-                <Details
-                from= "2012-2013"
-                college= "Tagore Vidyalayam Mat Hr Sec School"
-                collegelink= "/"
-                degree= "SSLC"
-                marks= "79%"
-                place= "Madurai|Tamilnadu"
-                />
-                
-                
-                </ul>
 
-            </div>
-            </div>
-  )
-}
 
-export default Education
+
+

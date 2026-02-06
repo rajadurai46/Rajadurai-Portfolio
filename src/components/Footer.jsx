@@ -1,64 +1,123 @@
-import React from 'react'
-import {FaLinkedin} from "react-icons/fa"
-import {FaGithub} from "react-icons/fa"
-import {FaFacebook} from "react-icons/fa"
-import {FaInstagram} from "react-icons/fa"
-import {FaWhatsapp} from "react-icons/fa"
-import { FaRegCopyright } from "react-icons/fa6"
-import {motion} from "framer-motion"
+import React from "react";
+import {
+  FaLinkedin,
+  FaGithub,
+  FaFacebook,
+  FaInstagram,
+  FaWhatsapp,
+} from "react-icons/fa";
+import { FaRegCopyright } from "react-icons/fa6";
+import { motion } from "framer-motion";
 
+const socialLinks = [
+  {
+    icon: <FaFacebook />,
+    url: "https://www.facebook.com/irajadurai46",
+    color: "text-blue-600",
+  },
+  {
+    icon: <FaInstagram />,
+    url: "https://www.instagram.com/irajadurai46",
+    color: "text-rose-500",
+  },
+  {
+    icon: <FaWhatsapp />,
+    url: "https://wa.me/qr/VX7Y5WNX5VOUG1",
+    color: "text-green-500",
+  },
+  {
+    icon: <FaLinkedin />,
+    url: "https://www.linkedin.com/in/rajadurai-a-a894a71aa",
+    color: "text-blue-500",
+  },
+  {
+    icon: <FaGithub />,
+    url: "https://github.com/rajadurai46",
+    color: "text-neutral-800 dark:text-white",
+  },
+];
 
 const Footer = () => {
   return (
-    <div className='bg-slate-50 dark:bg-neutral-950 dark:text-white
-     py-12 w-full mx-auto px-4 md:px-20' id='footer'>
-       
-        <div className='flex flex-col items-center justify-center'>
-        <motion.div 
-        whileInView={{opacity: 3, y: 0}}
-        initial={{opacity: 4, y: -100}}
-        transition={{duration: 1}} 
-        
-        className='flex space-x-4 gap-2'>
-           <a href='https://www.facebook.com/irajadurai98'> <FaFacebook 
-           className='text-blue-800 text-2xl sm:text-3xl hover:scale-150'/> </a>
+    <footer
+      id="footer"
+      className="
+      relative border-t border-neutral-800
+      bg-white dark:bg-black dark:text-white
+      "
+    >
+      {/* Glow */}
+      <div
+        aria-hidden
+        className="
+        absolute inset-0
+        bg-[radial-gradient(ellipse_at_top,rgba(6,182,212,0.35),transparent_60%)]
+        "
+      />
 
-           <a href='https://www.instagram.com/irajadurai98?igsh=MWw5dGZkbWw4cmI4bg=='>
-            <FaInstagram 
-            className='text-rose-600 text-2xl sm:text-3xl hover:scale-150'/> </a>
+      <div className="relative max-w-6xl mx-auto px-4 py-12">
 
-            <a href='https://wa.me/message/SSGUGBMX43J7M1'>
-            <FaWhatsapp 
-            className='text-green-600 text-2xl sm:text-3xl hover:scale-150'/> </a>
-
-            <a href='https://www.linkedin.com/in/rajadurai-a-a894a71aa?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app'>
-            <FaLinkedin 
-            className='text-blue-800 text-2xl sm:text-3xl hover:scale-150'/> </a>
-
-            <a href='https://github.com/rajadurai46'>
-            <FaGithub 
-            className='text-2xl sm:text-3xl hover:scale-150'/> </a>
+        {/* Social Icons (ONE-TIME animation) */}
+        <motion.div
+          initial={{ opacity: 0, y: -30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}   // ✅ animate once
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="flex justify-center gap-5 mb-8"
+        >
+          {socialLinks.map((item, index) => (
+            <motion.a
+              key={index}
+              href={item.url}
+              target="_blank"
+              rel="noreferrer"
+              whileHover={{ scale: 1.2 }}  // hover allowed
+              whileTap={{ scale: 0.95 }}
+              className={`
+              text-2xl sm:text-3xl
+              p-3 rounded-full
+              bg-white/70 dark:bg-black/40
+              backdrop-blur-xl
+              shadow-md
+              transition-colors
+              ${item.color}
+              `}
+            >
+              {item.icon}
+            </motion.a>
+          ))}
         </motion.div>
-        </div>
-       
-       <div className='mt-8 border-t border-gray-700 pt-4 flex flex-col items-center'>
 
-       <p className='flex gap-1'>
-            <FaRegCopyright className='mt-1'/>
-            <span className='text-cyan-600 font-bold gap-4'>{new Date().getFullYear()}</span> Copyrights | All Rights Reserved
-        </p>
-        <p className='text-base'>
-            Created by <span className='font-semibold'>Rajadurai</span> {} 
-            <span className='text-red-600 font-bold'>A</span>
-        </p>
+        {/* Divider */}
+        <div className="border-t border-neutral-400/40 dark:border-neutral-700 mb-6" />
 
-       </div>
-        
-       
-       
+        {/* Copyright */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}   // ✅ animate once
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-center space-y-1 text-sm sm:text-base"
+        >
+          <p className="flex justify-center items-center gap-1">
+            <FaRegCopyright />
+            <span className="text-cyan-600 font-semibold">
+              {new Date().getFullYear()}
+            </span>
+            <span>All Rights Reserved</span>
+          </p>
 
-    </div>
-  )
-}
+          <p>
+            Created by{" "}
+            <span className="font-semibold">
+              Rajadurai <span className="text-red-600">A</span>
+            </span>
+          </p>
+        </motion.div>
+      </div>
+    </footer>
+  );
+};
 
-export default Footer
+export default Footer;
+

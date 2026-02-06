@@ -1,93 +1,179 @@
-import React, { useRef } from 'react'
-import LiIcon from './LiIcon'
-import {motion, useScroll} from 'framer-motion'
+import  { useState } from "react";
+import { motion } from "framer-motion";
 
+/* EXPERIENCE CARD */
+const ExperienceCard = ({
+  date,
+  position,
+  company,
+  companylink,
+  desc,
+  place,
+  skills,
+}) => {
+  const [open, setOpen] = useState(false);
 
+  return (
+    <li className="relative flex justify-center pb-20">
+      {/* Timeline Marker */}
+      <span
+        className="
+        absolute left-1/2 -translate-x-1/2 top-6
+        w-2 h-2 rounded-full bg-cyan-400
+        shadow-[0_0_12px_rgba(34,211,238,0.9)]
+        "
+      />
 
+      {/* Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}      // ✅ once only
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        whileHover={{ y: -4 }}
+        className="
+        w-full sm:w-[92%] lg:w-[58%]
+        rounded-2xl border border-neutral-200/60 dark:border-neutral-800
+        bg-white/90 dark:bg-neutral-900/80
+        p-6 shadow-sm transition-all duration-300
+        hover:bg-neutral-50 dark:hover:bg-neutral-800
+        hover:border-cyan-400 hover:shadow-xl
+        "
+      >
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <h3 className="text-lg sm:text-xl font-semibold">
+            {position}
+          </h3>
+          <span className="text-xs sm:text-sm text-neutral-500">
+            {date}
+          </span>
+        </div>
 
-const Details = ({date, position, company, companylink, desc, place}) => { 
+        {/* Company */}
+        <a
+          href={companylink}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-block mt-1 text-cyan-600 font-medium hover:underline"
+        >
+          {company}
+        </a>
 
-    const ref = useRef(null)
-    return(
-        <li ref={ref} className='my-8 first:mt-0 last:mb-0 w-[60%] mx-auto flex flex-col 
-         justify-between'>
-            <LiIcon reference={ref}/>
-            <motion.div
-            initial={{y:50}}
-            whileInView={{y:0}}
-            transition={{duration:0.5, type:"spring"}}
-            >
-            <h3 className='capitalize font-bold text-xl'>{position}&nbsp; <a href={companylink}
-            target='_blank' className='text-red-600 capitalize'>{company}</a></h3>
-            <span className='capitalize font-medium text-slate-600'>
-              {date}  @{place}
-            </span>
-            <p className='font-medium w-full'>
-                {desc}
-            </p>
-            </motion.div>
-        </li>
-    )
-}
+        {/* Location */}
+        <p className="text-xs sm:text-sm text-neutral-500 mt-1">
+          {place}
+        </p>
 
+        {/* Description */}
+        <p className="mt-4 text-sm sm:text-base leading-relaxed text-neutral-700 dark:text-neutral-300">
+          {desc}
+        </p>
 
+        {/* Toggle Button */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="mt-4 text-sm font-medium text-cyan-600 hover:underline"
+        >
+          {open ? "Hide Skills" : "View Skills"}
+        </button>
+
+        {/* Skills */}
+        {open && (
+          <div className="mt-3 flex flex-wrap gap-2">
+            {skills.map((skill, i) => (
+              <span
+                key={i}
+                className="
+                text-xs px-3 py-1 rounded-md
+                bg-cyan-600/10 text-cyan-700
+                dark:bg-neutral-700 dark:text-neutral-200
+                "
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+        )}
+      </motion.div>
+    </li>
+  );
+};
 
 const Experience = () => {
+  const experienceData = [
+    {
+      date: "Dec 2025 – Present",
+      position: "MERN Full Stack Developer Intern",
+      company: "Maticz Technologies Pvt Ltd",
+      companylink: "https://maticz.com/",
+      place: "Madurai, Tamil Nadu",
+      desc:
+        "Developed full-stack web applications using React.js and Node.js, built secure REST APIs with Express.js and MongoDB, and implemented JWT-based authentication and protected routes.",
+      skills: [
+        "JavaScript",
+        "React.js",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "OAuth",
+        "JWT",
+      ],
+    },
+    {
+      date: "Aug 2023 – Feb 2025",
+      position: "Assistant Business Manager",
+      company: "Shriram Finance Limited",
+      companylink: "https://www.shriramfinance.in",
+      place: "Madurai, Tamil Nadu",
+      desc:
+        "Managed business operations including collections and recovery, led teams to achieve monthly targets, and strengthened customer relationships.",
+      skills: ["Leadership", "CRM", "Negotiation", "Collections"],
+    },
+    {
+      date: "Apr 2021 – Jul 2022",
+      position: "Process Associate",
+      company: "Solartis Technology Services Pvt Ltd",
+      companylink: "https://www.solartis.com/about/contact-info",
+      place: "Madurai, Tamil Nadu",
+      desc:
+        "Supported backend insurance workflows and collaborated with teams to deliver accurate and timely processing.",
+      skills: ["Insurance Ops", "Backend Processing", "Documentation"],
+    },
+  ];
 
-    const ref = useRef(null)
-    const {scrollYProgress} = useScroll(
-        {
-            target: ref,
-            offset: ["start end", "center start"]
-        }
-    )
   return (
-           <div className='bg-white dark:bg-black dark:text-white border-b border-neutral-900 
-           pb-24 pt-14 w-full' id='experience'>
-            <h2 className='font-semibold text-4xl mb-32 text-center'>
-                Experience
-            </h2>
+    <section
+      id="experience"
+      className="
+      relative py-24 border-b border-neutral-900
+      bg-slate-100 dark:bg-black dark:text-white
+      "
+    >
+      <h2 className="text-center text-3xl sm:text-4xl font-semibold mb-20">
+        Experience
+      </h2>
 
-            <div ref={ref} className='w-[75%] mx-auto relative'>
-                <motion.div
-                style={{scaleY: scrollYProgress}} 
-                
-                className='absolute left-[54px] top-0 w-[4px] h-full bg-dark 
-                dark:bg-white origin-top'/>
+      <div className="relative max-w-5xl mx-auto px-4">
+        {/* STATIC TIMELINE */}
+        <div
+          className="
+          absolute left-1/2 -translate-x-1/2 top-0
+          w-[2px] h-full rounded-full
+          bg-gradient-to-b from-cyan-400 via-blue-500 to-purple-600
+          "
+        />
 
-                <ul className='w-full flex flex-col items-center justify-between pl-8'>
-                <Details
-                date= "Aug 2023 - Present"
-                position="Assistant Business Manager"
-                companylink= "/"
-                company= "Shriram Finance Limited"
-                desc= "Led a team in Business, Collection and Recovery. Implemented with team members by handling the customers. Acheiving the target to close within the month-end."
-                place= "Madurai|Tamilnadu"
-                />
-                
-                <Details
-                date= "Nov 2022 - May 2023"
-                position= "Process Associate"
-                companylink= "/"
-                company= "MattsenKumar Services Pvt Ltd"
-                desc= "Worked closely with customers to integrate their facing issues and doubts. Implemented responsive solution to optimize their issues and clarified them via voice, chat and mails."
-                place= "Gurgaon|New Delhi"
-                />
-                
-                <Details
-                date= "Apr 2021 - Jul 2022"
-                position= "Process Associate"
-                compnaylink= "/"
-                company= "Solartis Technology Services Pvt Ltd"
-                desc= "Developed and maintained the clients requirement backend insurance process. Collaborated with cross-functional teams to deliver high-quality products on schedule."
-                place= "Madurai|Tamilnadu"
-                />
-                
-                </ul>
+        <ul className="relative flex flex-col">
+          {experienceData.map((item, index) => (
+            <ExperienceCard key={index} {...item} />
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+};
 
-            </div>
-            </div>
-  )
-}
+export default Experience;
 
-export default Experience
+

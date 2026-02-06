@@ -1,92 +1,194 @@
-import React, { useRef } from 'react'
-import {motion} from "framer-motion"
-import emailjs from '@emailjs/browser'
-import Swal from 'sweetalert2'
-
-
+import { useRef } from "react";
+import Swal from "sweetalert2";
 
 const Contact = () => {
-const form = useRef()
+  const formRef = useRef(null);
 
-  const sendEmail = (e) => {
-    Swal.fire({
-      title: "Success!",
-      text: "You have sent a Message to Rajadurai",
-      icon: "Success"
-    })
+  const sendEmail = async (e) => {
     e.preventDefault();
 
-    emailjs
-      .sendForm('service_zrw1xlq', 'template_yu2yls8', form.current, {
-        publicKey: 'Qw4FDwJICVnU6hNmW',
-      })
-      .then(
-        () => {
-          console.log('SUCCESS!');
-        },
-        (error) => {
-          console.log('FAILED...', error.text);
-        },
-      ); 
-      e.target.reset()
+    try {
+      const formData = new FormData(formRef.current);
 
+      /* STEP 1: TOKENIZE USER DATA */
+      const tokenizeRes = await fetch(
+        "http://localhost:5000/api/contact/tokenize",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.get("user_name"),
+            email: formData.get("user_email"),
+            phone: formData.get("user_phone"),
+            message: formData.get("message"),
+          }),
+        }
+      );
+
+      const tokenizeData = await tokenizeRes.json();
+
+      if (!tokenizeRes.ok || !tokenizeData.token) {
+        throw new Error(tokenizeData.message || "Token generation failed");
+      }
+
+      /* STEP 2: SAVE USING TOKEN ONLY */
+      const saveRes = await fetch(
+        "http://localhost:5000/api/contact/save",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            token: tokenizeData.token,
+          }),
+        }
+      );
+
+      const saveData = await saveRes.json();
+
+      if (!saveRes.ok) {
+        throw new Error(saveData.message || "Failed to save contact");
+      }
+
+      /* SUCCESS */
+      Swal.fire({
+        title: "Success!",
+        text: "Message sent successfully. Please check your email.",
+        icon: "success",
+        confirmButtonColor: "#06b6d4",
+      });
+
+      formRef.current.reset();
+    } catch (error) {
+      console.error(error);
+
+      Swal.fire({
+        title: "Error!",
+        text: error.message || "Something went wrong. Please try again.",
+        icon: "error",
+        confirmButtonColor: "#ef4444",
+      });
+    }
   };
 
-  
   return (
-    <div className='bg-white dark:bg-black dark:text-white border-b border-neutral-900 
-           pb-24 pt-14' id='contact'>
-           
-           <div>
-            <h1 className='font-semibold text-4xl mb-4 w-full text-center'>
-                Contact <span className='text-cyan-600'>ME</span>
-            </h1>
-            <p className='text-center font-semibold'>Any Queries, feel free to reach me</p>
-            </div>
+    <section
+      id="contact"
+      className="
+      py-24 border-b border-neutral-900
+      bg-white dark:bg-black dark:text-white
+      "
+    >
+      <div className="max-w-xl mx-auto px-4">
+        <h2 className="text-4xl font-bold text-center mb-3">
+          Contact <span className="text-cyan-600">Me</span>
+        </h2>
+        <p className="text-center mb-10 text-neutral-600 dark:text-neutral-300">
+          Feel free to reach out for any queries or collaborations
+        </p>
 
-            <motion.div 
-            whileInView={{opacity: 1, x: 0}}
-            initial={{opacity: 1, x: -300}}
-            transition={{duration: 1}} 
-            className='flex flex-col items-center justify-center mt-5'>
-            <form ref={form} onSubmit={sendEmail} className='bg-slate-400 sm:w-96 w-72 px-8 py-6'>
-               <h1 className='text-xl font-semibold mb-4 text-center dark:text-black'>Type Your Message</h1> 
-               <div className='flex flex-col mb-4'>
-                <label className='block text-base font-bold mb-2 dark:text-black' htmlFor='name'>
-                 Full Name
-                </label>
-                <input type='text' className='shadow appearance-none border rounded-lg py-2 px-3
-                text-gray-700 leading-tight focus:outline-none focus:shadow-outline items-start' 
-                placeholder='Enter Your Name'/>
-               </div>
+        <form
+          ref={formRef}
+          onSubmit={sendEmail}
+          className="
+          bg-white dark:bg-neutral-900
+          rounded-2xl p-8
+          shadow-lg
+          border border-neutral-300 dark:border-neutral-700
+          "
+        >
+          {/* Name */}
+          <div className="mb-5">
+            <label className="block mb-2 font-semibold">Full Name</label>
+            <input
+              type="text"
+              name="user_name"
+              required
+              placeholder="Enter your name"
+              className="
+              w-full px-4 py-2 rounded-lg
+              border border-neutral-300 dark:border-neutral-700
+              focus:outline-none focus:ring-2 focus:ring-cyan-500
+              dark:bg-black
+              "
+            />
+          </div>
 
-               <div className='flex flex-col mb-4'>
-                <label className='block text-base font-bold mb-2 dark:text-black' htmlFor='email'>
-                 Email Address
-                </label>
-                <input type='text' className='shadow appearance-none border rounded-lg py-2 px-3
-                text-gray-700 leading-tight focus:outline-none focus:shadow-outline items-start' 
-                placeholder='Enter Your Email Address'/>
-               </div>
+          {/* Email */}
+          <div className="mb-5">
+            <label className="block mb-2 font-semibold">Email Address</label>
+            <input
+              type="email"
+              name="user_email"
+              required
+              placeholder="Enter your email"
+              className="
+              w-full px-4 py-2 rounded-lg
+              border border-neutral-300 dark:border-neutral-700
+              focus:outline-none focus:ring-2 focus:ring-cyan-500
+              dark:bg-black
+              "
+            />
+          </div>
 
-               <div className='flex flex-col mb-4'>
-                <label className='block text-base font-bold mb-2 dark:text-black' htmlFor='message'>
-                 Message
-                </label>
-                <textarea type='text' className='shadow appearance-none border rounded-lg py-2 px-3
-                text-gray-700 leading-tight focus:outline-none focus:shadow-outline items-start' 
-                placeholder='Enter Your Message'/>
-               </div>
-               <button type='submit' 
-               className='bg-cyan-600 rounded-xl px-3 py-3 hover:scale-110 transition-[0.3s] dark:text-black'>
-                Submit
-               </button>
-            </form>
-            </motion.div>
+          {/* Phone */}
+          <div className="mb-5">
+            <label className="block mb-2 font-semibold">Phone Number</label>
+            <input
+              type="tel"
+              name="user_phone"
+              required
+              placeholder="Enter your number"
+              className="
+              w-full px-4 py-2 rounded-lg
+              border border-neutral-300 dark:border-neutral-700
+              focus:outline-none focus:ring-2 focus:ring-cyan-500
+              dark:bg-black
+              "
+            />
+          </div>
 
-     
+          {/* Message */}
+          <div className="mb-6">
+            <label className="block mb-2 font-semibold">Message</label>
+            <textarea
+              name="message"
+              rows="4"
+              required
+              placeholder="Type your message..."
+              onInput={(e) => {
+                e.target.style.height = "auto";
+                e.target.style.height = e.target.scrollHeight + "px";
+              }}
+              className="
+              w-full px-4 py-2 rounded-lg
+              border border-neutral-300 dark:border-neutral-700
+              focus:outline-none focus:ring-2 focus:ring-cyan-500
+              resize-none overflow-hidden
+              dark:bg-black
+              "
+            />
+          </div>
 
-    </div>
-  )
-}
-export default Contact
+          {/* Submit */}
+          <button
+            type="submit"
+            className="
+            w-full py-3 rounded-full
+            bg-cyan-600 text-white font-semibold
+            hover:bg-cyan-500 hover:scale-[1.02]
+            transition-all
+            "
+          >
+            Send Message
+          </button>
+        </form>
+      </div>
+    </section>
+  );
+};
+
+export default Contact;
+
+
+
+

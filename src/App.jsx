@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 import Project from "./components/Project";
+import Certification from "./components/Certification";
 import Skills from "./components/Skills";
 
 function App() {
@@ -36,6 +37,7 @@ useEffect(() => {
       <Skills/>
       <Project/>
       <Experience/>
+      <Certification />
       <Education/>
       <Contact/>
       <Footer/>
