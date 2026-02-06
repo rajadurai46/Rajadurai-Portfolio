@@ -1,6 +1,6 @@
 
 =======
-  "name": "mern-e-commerce",
+  "name": "port-folio",
   "private": true,
   "scripts": {
     "client": "cd port-folio && npm run dev",
