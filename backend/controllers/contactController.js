@@ -31,47 +31,35 @@ exports.tokenizeContact = (req, res) => {
 ========================= */
 exports.saveContact = async (req, res) => {
   try {
-    // 🔐 HARD GUARD (prevents 500 crash)
     if (!req.userData) {
-      return res.status(401).json({
-        message: "Invalid or missing token data",
-      });
+      return res.status(401).json({ message: "Invalid token data" });
     }
 
     const { name, email, phone, message } = req.userData;
 
-    if (!name || !email || !phone || !message) {
-      return res.status(400).json({
-        message: "Incomplete token payload",
-      });
-    }
+    // ✅ 1️⃣ Save to DB (FAST)
+    await Contact.create({ name, email, phone, message });
 
-    // ✅ DB SAVE
-    await Contact.create({
-      name,
-      email,
-      phone,
-      message,
-    });
-
-    // ⚠️ Email sending can crash — isolate it
-    try {
-      await sendAutoReply(email, name);
-      await sendAdminNotification(name, email, phone, message);
-    } catch (mailErr) {
-      console.error("EMAIL ERROR 👉", mailErr.message);
-      // Do NOT fail the request if email fails
-    }
-
-    return res.status(201).json({
+    // ✅ 2️⃣ RESPOND IMMEDIATELY
+    res.status(201).json({
       success: true,
-      message: "Token verified. Data stored securely.",
+      message: "Message saved successfully",
     });
+
+    // ✅ 3️⃣ SEND EMAIL ASYNC (NON-BLOCKING)
+    Promise.resolve()
+      .then(() => sendAutoReply(email, name))
+      .then(() => sendAdminNotification(name, email, phone, message))
+      .catch((err) =>
+        console.error("EMAIL BACKGROUND ERROR 👉", err.message)
+      );
+
   } catch (error) {
     console.error("SAVE CONTACT ERROR 👉", error);
-    return res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error" });
   }
 };
+
 
 
 
