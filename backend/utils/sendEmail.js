@@ -3,8 +3,8 @@ const { Resend } = require("resend");
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 exports.sendAutoReply = async (to, name) => {
-  await resend.emails.send({
-    from: "Rajadurai <rj46jr@gmail.com>",
+  await transporter.sendMail({
+    from: `"Rajadurai" <${process.env.EMAIL_USER}>`,
     to,
     subject: "Thanks for contacting me!",
     html: `
@@ -17,9 +17,9 @@ exports.sendAutoReply = async (to, name) => {
 };
 
 exports.sendAdminNotification = async (name, email, phone, message) => {
-  await resend.emails.send({
-    from: "Rajadurai <rj46jr@gmail.com>",
-    to: "rj46jr@gmail.com",
+  await transporter.sendMail({
+    from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
+    to: process.env.EMAIL_USER,
     subject: "New Contact Form Message",
     html: `
       <h3>New Message Received</h3>
