@@ -1,16 +1,10 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 exports.sendAutoReply = async (to, name) => {
-  await transporter.sendMail({
-    from: `"Rajadurai" <${process.env.EMAIL_USER}>`,
+  await resend.emails.send({
+    from: "Portfolio <onboarding@resend.dev>",
     to,
     subject: "Thanks for contacting me!",
     html: `
@@ -23,9 +17,9 @@ exports.sendAutoReply = async (to, name) => {
 };
 
 exports.sendAdminNotification = async (name, email, phone, message) => {
-  await transporter.sendMail({
-    from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
-    to: process.env.EMAIL_USER,
+  await resend.emails.send({
+    from: "Portfolio <onboarding@resend.dev>",
+    to: "rj46jr@gmail.com",
     subject: "New Contact Form Message",
     html: `
       <h3>New Message Received</h3>
@@ -36,3 +30,4 @@ exports.sendAdminNotification = async (name, email, phone, message) => {
     `,
   });
 };
+

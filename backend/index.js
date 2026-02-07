@@ -3,9 +3,12 @@ const cors = require("cors");
 const path = require("path");
 const mongoose = require("mongoose");
 require("dotenv").config();
+require("./utils/sendEmail");
+
 
 
 const app = express();
+
 
 /* DB */
 mongoose.connect(process.env.MONGO_URI)
