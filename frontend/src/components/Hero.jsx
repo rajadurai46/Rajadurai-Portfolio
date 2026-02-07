@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 const Hero = ({ theme }) => {
   const downloadResume = () => {
-    window.open("http://localhost:5000/api/resume/download", "_blank");
+    window.open("https://rajadurai-portfolio.onrender.com/api/resume/download", "_blank");
   };
 
   return (

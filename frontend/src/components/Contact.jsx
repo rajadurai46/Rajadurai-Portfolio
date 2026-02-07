@@ -12,7 +12,7 @@ const Contact = () => {
 
       /* STEP 1: TOKENIZE USER DATA */
       const tokenizeRes = await fetch(
-        "http://localhost:5000/api/contact/tokenize",
+        "https://rajadurai-portfolio.onrender.com/api/contact/tokenize",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -33,7 +33,7 @@ const Contact = () => {
 
       /* STEP 2: SAVE USING TOKEN ONLY */
       const saveRes = await fetch(
-        "http://localhost:5000/api/contact/save",
+        "https://rajadurai-portfolio.onrender.com/api/contact/save",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
