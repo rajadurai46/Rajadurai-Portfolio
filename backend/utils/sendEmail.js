@@ -4,7 +4,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 exports.sendAutoReply = async (to, name) => {
   await resend.emails.send({
-    from: "Portfolio <onboarding@resend.dev>",
+    from: "Rajadurai <rj46jr@gmail.com>",
     to,
     subject: "Thanks for contacting me!",
     html: `
@@ -18,7 +18,7 @@ exports.sendAutoReply = async (to, name) => {
 
 exports.sendAdminNotification = async (name, email, phone, message) => {
   await resend.emails.send({
-    from: "Portfolio <onboarding@resend.dev>",
+    from: "Rajadurai <rj46jr@gmail.com>",
     to: "rj46jr@gmail.com",
     subject: "New Contact Form Message",
     html: `
