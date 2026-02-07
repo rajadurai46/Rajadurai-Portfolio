@@ -2,7 +2,7 @@ const path = require("path");
 
 /* Download Resume */
 const downloadResume = (req, res) => {
-  const filePath = path.join(__dirname, "..", "public", "Resume.pdf");
+  const filePath = path.join(__dirname, "..", "public", "Rajadurai_Resume.pdf");
 
   res.download(filePath, "Rajadurai-Resume.pdf", (err) => {
     if (err) {
