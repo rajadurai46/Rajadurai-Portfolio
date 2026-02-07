@@ -1,48 +1,47 @@
-import React, { useEffect } from 'react'
-import About from '../../frontend/src/components/About'
-import Contact from "../../frontend/src/components/Contact";
-import Experience from "../../frontend/src/components/Experience";
-import Education from '../../frontend/src/components/Education';
-import Footer from "../../frontend/src/components/Footer";
-import Hero from "../../frontend/src/components/Hero";
-import Navbar from "../../frontend/src/components/Navbar";
-import Project from "../../frontend/src/components/Project";
-import Certification from "../../frontend/src/components/Certification";
-import Skills from "../../frontend/src/components/Skills";
+import { useEffect, useState } from "react";
+
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import About from "./components/About";
+import Skills from "./components/Skills";
+import Project from "./components/Project";
+import Experience from "./components/Experience";
+import Certification from "./components/Certification";
+import Education from "./components/Education";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 
 function App() {
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") || "dark"
+  );
 
-const [theme, settheme] = React.useState(localStorage.getItem("theme") ?
-localStorage.getItem("theme") : "dark");
+  useEffect(() => {
+    const root = document.documentElement;
 
-const element = document.documentElement;
-useEffect(() => {
-  if(theme === "dark"){
-    element.classList.add("dark");
-    localStorage.setItem("theme", "dark");
-  }
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
 
-  else{
-    element.classList.remove("dark");
-    localStorage.setItem("theme", "light");
-  }
-}, [theme])
-
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   return (
-    <div>
-      <Navbar theme={theme} settheme={settheme}/>
-      <Hero theme={theme}/>
-      <About/>
-      <Skills/>
-      <Project/>
-      <Experience/>
+    <div className="bg-white dark:bg-black transition-colors duration-300">
+      <Navbar theme={theme} settheme={setTheme} />
+      <Hero theme={theme} />
+      <About />
+      <Skills />
+      <Project />
+      <Experience />
       <Certification />
-      <Education/>
-      <Contact/>
-      <Footer/>
+      <Education />
+      <Contact />
+      <Footer />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
