@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 /* Static folder (optional) */
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/public", express.static(path.join(__dirname, "public")));
 
 /* Routes */
 app.use("/api/resume", require("./routes/resumeRoutes"));
